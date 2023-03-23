@@ -12,7 +12,7 @@ import plotly.express as px
 import plotly.figure_factory as ff
 
 # In[]:
-HeaderImage = Image.open('Header.jpeg')
+HeaderImage = Image.open('Header.png')
 st.image(HeaderImage, width=290)
 
 st.header('Groep 2 Casus-3')
