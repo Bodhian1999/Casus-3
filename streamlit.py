@@ -170,10 +170,10 @@ df2['Total Count'] = df2.groupby('brandstof_omschrijving').value.cumsum()
 
 fig2 = px.line(df2, y='Total Count', x='datum_tenaamstelling', color = 'brandstof_omschrijving', log_y=True)
 
-fig2.update_layout(
+fig2.update_layout(width=970,height=620,
     xaxis=dict(rangeslider=dict(visible=True), title='Datum Tenaamstelling'),
     title="Hoeveelheid Auto's per Brandstof Type",
-    title_x= 0.45,
+    title_x= 0.35,
     yaxis=dict(
     title="Hoeveelheid Auto's"),
     legend=dict(
