@@ -5,11 +5,11 @@ import pandas as pd
 import folium
 import streamlit as st
 from streamlit_folium import st_folium
-import plotly.figure_factory as ff
 from PIL import Image
 import calendar
 from datetime import datetime as dt
 import plotly.express as px
+import plotly.figure_factory as ff
 
 # In[]:
 HeaderImage = Image.open('Header.jpeg')
