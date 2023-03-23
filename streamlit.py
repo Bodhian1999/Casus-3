@@ -7,9 +7,26 @@ import streamlit as st
 from streamlit_folium import st_folium
 from PIL import Image
 import calendar
+import time
 from datetime import datetime as dt
+from datetime import date
 import plotly.express as px
 import plotly.figure_factory as ff
+import seaborn as sns
+from statsmodels.formula.api import ols
+from matplotlib import style
+import matplotlib.pyplot as plt
+from sklearn import metrics
+from sklearn import model_selection
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+import numpy as np 
+import urllib.request
+
 
 # In[]:
 HeaderImage = Image.open('Header.png')
@@ -357,12 +374,12 @@ colors = ['#FF0000','#00B9FF']
 fig = ff.create_distplot(hist_data, group_labels, colors=colors,show_rug=False, bin_size=.25)
 
 fig.update_layout(
-    title='Probability of Charge Time',
+    title='Kans op Oplaadtijd',
     title_x= 0.35,
     xaxis=dict(
-    title='Charge time in (hours)'),
+    title='Oplaadtijd in (uren)'),
     yaxis=dict(
-    title='Probability Density'),
+    title='Kansdichtheid'),
 
     shapes=[
     {'line': {'color': '#FF5733', 'dash': 'dash', 'width': 2},
@@ -456,6 +473,163 @@ fig.update_layout(
 )
 
 fig.update_layout(xaxis=dict(rangeslider=dict(visible=True)), autosize=False, width=970,height=620)
+
+# In[95]:
+
+
+df1 = pd.read_csv('car data.csv')
+#df1.head()
+
+
+# In[97]:
+
+
+#df1.info()
+
+
+# In[98]:
+
+
+#df1.isnull().sum()
+
+
+# In[99]:
+
+
+#df1.describe()
+
+
+# In[100]:
+
+
+#df1.columns
+
+
+# In[101]:
+
+
+#print(df1['Fuel_Type'].value_counts())
+#print(df1['Seller_Type'].value_counts())
+#print(df1['Transmission'].value_counts())
+
+
+# In[102]:
+
+
+fuel_type = df1['Fuel_Type']
+seller_type = df1['Seller_Type']
+transmission_type = df1['Transmission']
+selling_price = df1['Selling_Price']
+
+
+# In[105]:
+
+
+petrol_data = df1.groupby('Fuel_Type').get_group('Petrol')
+petrol_data.describe()
+
+
+# In[106]:
+
+
+df1.replace({'Fuel_Type':{'Petrol':0, 'Diesel':1, 'CNG':2}}, inplace=True)
+
+
+# In[107]:
+
+
+df1 = pd.get_dummies(df1, columns=['Seller_Type', 'Transmission'],drop_first=True)
+
+
+# In[110]:
+
+
+X = df1.drop(['Car_Name','Selling_Price'], axis=1)
+y = df1['Selling_Price']
+
+
+# In[111]:
+
+
+#print("Shape of X is: ",X.shape)
+#print("Shape of y is: ", y.shape)
+
+
+# In[112]:
+
+
+X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.3, random_state=42)
+
+
+# In[114]:
+
+
+scaler = StandardScaler()
+
+
+# In[115]:
+
+
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+
+# In[116]:
+
+
+model = LinearRegression()
+
+
+# In[117]:
+
+
+model.fit(X_train, y_train)
+
+
+# In[113]:
+
+
+#print("X_test shape:", X_test.shape)
+#print("X_train shape:", X_train.shape)
+#print("y_test shape: ", y_test.shape)
+#print("y_train shape:", y_train.shape)
+
+
+# In[118]:
+
+
+pred = model.predict(X_test)
+
+
+# In[120]:
+
+
+#print("MAE: ", (metrics.mean_absolute_error(pred, y_test)))
+#print("MSE: ", (metrics.mean_squared_error(pred, y_test)))
+#print("R2 score: ", (metrics.r2_score(pred, y_test)))
+
+
+# In[121]:
+
+
+sns.regplot(x=pred, y=y_test)
+plt.xlabel("Predicted Price")
+plt.ylabel('Actual Price')
+plt.title("Actual vs predicted price")
+plt.show()
+
+
 st.plotly_chart(fig)
 
+st.markdown("**Auto's per Brandstof Type**")
+
 st.plotly_chart(fig2)
+
+st.markdown("**Regressie Grafiek**")
+
+st.pyplot(fig3)
+
+
+
+
+
