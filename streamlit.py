@@ -612,10 +612,6 @@ pred = model.predict(X_test)
 # In[121]:
 
 
-fig3 = sns.regplot(x=pred, y=y_test)
-plt.xlabel("Predicted Price")
-plt.ylabel('Actual Price')
-plt.title("Actual vs predicted price")
 
 
 st.plotly_chart(fig)
@@ -626,9 +622,9 @@ st.plotly_chart(fig2)
 
 st.markdown("**Regressie Grafiek**")
 
-st.pyplot(fig3)
+sns.regplot(x=pred, y=y_test)
+plt.xlabel("Predicted Price")
+plt.ylabel('Actual Price')
+plt.title("Actual vs predicted price")
 
-
-
-
-
+st.pyplot(plt.gcf())
