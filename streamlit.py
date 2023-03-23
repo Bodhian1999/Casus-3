@@ -613,9 +613,9 @@ pred = model.predict(X_test)
 
 
 fig3 = sns.regplot(x=pred, y=y_test)
-fig3.xlabel("Predicted Price")
-fig3.ylabel('Actual Price')
-fig3.title("Actual vs predicted price")
+plt.xlabel("Predicted Price")
+plt.ylabel('Actual Price')
+plt.title("Actual vs predicted price")
 
 
 st.plotly_chart(fig)
