@@ -129,8 +129,8 @@ st.code("laadpaaldata = laadpaaldata[laadpaaldata['ChargeTime'] >= 0]")
 st.header('RDW-data')
 
 st.markdown('**RDW data inladen met behulp van de API. Limit op 200.000 auto.**')
-st.code('response2 = requests.get("https://opendata.rdw.nl/resource/qyrd-w56j.json?$limit=200000&$offset=0")')
-response2 = requests.get("https://opendata.rdw.nl/resource/qyrd-w56j.json?$limit=200000&$offset=0")
+st.code('response2 = requests.get("https://opendata.rdw.nl/resource/qyrd-w56j.json?$limit=20000&$offset=0")')
+response2 = requests.get("https://opendata.rdw.nl/resource/qyrd-w56j.json?$limit=20000&$offset=0")
 
 st.markdown('**Omzetten naar json.**')
 st.code('responsejson2  = response2.json()')
@@ -142,8 +142,8 @@ rdw = pd.json_normalize(responsejson2)
 
 
 st.markdown('**RDW brandstof-data van auto inladen met behulp van de API.**')
-st.code("response3 = requests.get('https://opendata.rdw.nl/resource/8ys7-d773.json?$limit=2000000&$offset=0')")
-response3 = requests.get('https://opendata.rdw.nl/resource/8ys7-d773.json?$limit=2000000&$offset=0')
+st.code("response3 = requests.get('https://opendata.rdw.nl/resource/8ys7-d773.json?$limit=200000&$offset=0')")
+response3 = requests.get('https://opendata.rdw.nl/resource/8ys7-d773.json?$limit=200000&$offset=0')
 
 st.markdown('**Omzetten naar json.**')
 st.code('responsejson3  = response3.json()')
